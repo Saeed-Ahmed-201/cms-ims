@@ -26,5 +26,8 @@ public class Admin {
 	   
 	   @Column(name  = "email", length = 45, unique = true)
 	   private String email;
+	   
+	   @Column(name = "password")
+	   private String password;
 
 }

@@ -38,13 +38,13 @@ public class Item {
 	   @Column(name = "date")
 	   private LocalDate date;
 	   
-	   @ManyToOne(cascade = CascadeType.ALL)
+	   @ManyToOne
 	   @JoinColumn(name = "language_id", nullable = false)
 	   @JsonBackReference
 	   private Language language;
 	   
 	   
-	   @ManyToOne(cascade = CascadeType.ALL)
+	   @ManyToOne
 	   @JoinColumn(name = "category_id", nullable = false)
 	   @JsonBackReference
 	   private Category category;
