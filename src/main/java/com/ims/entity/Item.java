@@ -1,8 +1,7 @@
 package com.ims.entity;
 
-import java.time.LocalDate;
+import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -18,7 +19,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,8 +35,12 @@ public class Item {
 	   @Column(name = "url", length = 45)
 	   private String imgUrl;
 
-	   @Column(name = "date")
-	   private LocalDate date;
+	   @Temporal(TemporalType.TIMESTAMP)
+	   @Column(name = "date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	   private Date date;
+	   
+	   @Column(name = "img_url_prefix_id")
+	   private int imgUrlPrefixId;
 	   
 	   @ManyToOne
 	   @JoinColumn(name = "language_id", nullable = false)

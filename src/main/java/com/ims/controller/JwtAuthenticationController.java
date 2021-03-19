@@ -1,6 +1,5 @@
 package com.ims.controller;
 
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,6 @@ import com.ims.dto.response.SigninResponseDTO;
 import com.ims.dto.response.UserBasicInfo;
 import com.ims.entity.Admin;
 import com.ims.service.JwtUserDetailsService;
-
 
 @RestController
 @CrossOrigin

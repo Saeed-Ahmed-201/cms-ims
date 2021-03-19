@@ -15,4 +15,5 @@ public class ItemResponseDTO implements DTOEntity {
 	   
 	   private long id;
 	   private String imgUrl;
+	   private int imgUrlPrefixId;
 }
