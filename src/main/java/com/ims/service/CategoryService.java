@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.exceptions.CustomException;
 import com.ims.core.Mapper;
 import com.ims.dto.response.CategoryResponseDTO;
 import com.ims.entity.Category;
@@ -19,7 +20,7 @@ public class CategoryService {
 	   
 	   private Mapper dtoUtil = new Mapper();
 	   
-	   public List<CategoryResponseDTO> retrieveAllCategories(){
+	   public List<CategoryResponseDTO> retrieveAllCategories() throws CustomException{
 		      try {
 		    	  List<CategoryResponseDTO> categoryList = new ArrayList<>();
 		    	  List<Category> categories = this.categoryRepository.findAll();
@@ -31,7 +32,7 @@ public class CategoryService {
 		    	  return categoryList;
 		      }
 		      catch(Exception ex) {
-		    	  throw ex;
+		    	  throw new CustomException("null");
 		      }
 	   }
 }

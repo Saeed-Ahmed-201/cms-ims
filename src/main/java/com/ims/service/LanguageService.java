@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.exceptions.CustomException;
 import com.ims.core.Mapper;
 import com.ims.dto.response.LanguageResponseDTO;
 import com.ims.entity.Language;
@@ -19,7 +20,7 @@ public class LanguageService {
 	
 	   private Mapper dtoUtil = new Mapper();
 	   
-	   public List<LanguageResponseDTO> retrieveAllLanguages(){
+	   public List<LanguageResponseDTO> retrieveAllLanguages() throws CustomException{
 		      try {
 		    	  List<LanguageResponseDTO> languagesResponseDTO = new ArrayList<>();
 		    	  List<Language> languages = this.languageRepository.findAll();
@@ -31,7 +32,7 @@ public class LanguageService {
 		    	  return languagesResponseDTO;
 		      }
 		      catch(Exception ex) {
-		    	  throw ex;
+		    	  throw new CustomException("null");
 		      }
 	   }
 	   

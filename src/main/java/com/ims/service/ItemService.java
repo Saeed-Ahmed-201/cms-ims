@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.exceptions.CustomException;
 import com.ims.core.Mapper;
 import com.ims.dto.request.ItemUpdateRequest;
 import com.ims.dto.request.ItemsDeleteRequest;
@@ -36,7 +37,7 @@ public class ItemService {
 	   
 	   private Mapper dtoUtil = new Mapper();
 	   
-	   public List<ItemResponseDTO> retrieveAllItems(Pageable pagination){
+	   public List<ItemResponseDTO> retrieveAllItems(Pageable pagination) throws CustomException{
 		      try {
 		    	  List<ItemResponseDTO> itemResponseDTO = new ArrayList<>();
 		    	  Page<Item> items = this.itemRepository.findAll(pagination);
@@ -47,11 +48,11 @@ public class ItemService {
 		    	  return itemResponseDTO;
 		      }
 		      catch(Exception ex) {
-		    	  throw ex;
+		    	  throw new CustomException("null");
 		      }
 	   }
 	   
-	   public List<ItemResponseDTO> retrieveItemsByCategoryAndLanguage(long languageId, long categoryId, Pageable pagination){
+	   public List<ItemResponseDTO> retrieveItemsByCategoryAndLanguage(long languageId, long categoryId, Pageable pagination) throws CustomException{
 		      try {
 		    	  List<ItemResponseDTO> itemResponseDTO = new ArrayList<>();
 		    	  Page<Item> items = this.itemRepository.findItemByCategoryAndLanguage(languageId, categoryId, pagination);
@@ -63,11 +64,11 @@ public class ItemService {
 		    	  return itemResponseDTO;
 		      }
 		      catch(Exception ex) {
-		    	  throw ex;
+		    	  throw new CustomException("null");
 		      }
 	   }
 	   
-	   public boolean deleteMultipleItems(ItemsDeleteRequest ids){
+	   public boolean deleteMultipleItems(ItemsDeleteRequest ids) throws CustomException{
 		      try {
 		    	  boolean feedback = false;
 		    	  if(!ids.getIds().isEmpty()) {
@@ -79,11 +80,11 @@ public class ItemService {
 		    	  return feedback;
 		      }
 		      catch(Exception ex) {
-		    	  throw ex;
+		    	  throw new CustomException("null");
 		      }
 	   }
 	   
-	   public boolean updateItemLanguageCategory(ItemUpdateRequest updateItem) {
+	   public boolean updateItemLanguageCategory(ItemUpdateRequest updateItem) throws CustomException{
 		      try {
 		    	  boolean feedback = false;
 		    	  Item item = this.itemRepository.findById(updateItem.getItemId()).orElse(null);
@@ -98,11 +99,11 @@ public class ItemService {
 		    	  return feedback;
 		      }
 		      catch(Exception ex) {
-		    	  throw ex;
+		    	  throw new CustomException("null");
 		      }
 	   }
 	   
-	   public List<LanguageStaticResponse> itemStaticsByLanguage() {
+	   public List<LanguageStaticResponse> itemStaticsByLanguage() throws CustomException{
 		      try {
 		    	  List<LanguageStaticResponse> languageStaticResponse = new ArrayList<>();
 		    	  List<Language> languages = this.languageRepository.findAll();
@@ -130,11 +131,11 @@ public class ItemService {
 		    	  return languageStaticResponse;
 		      }
 		      catch(Exception ex) {
-		    	  throw ex;
+		    	  throw new CustomException("null");
 		      }
 	   }
 	   
-	   public CategoryStaticResponseDTO itemStaticsByCategory() {
+	   public CategoryStaticResponseDTO itemStaticsByCategory() throws CustomException{
 		      try {
 		    	  CategoryStaticResponseDTO categoryResponseDTO = new CategoryStaticResponseDTO();
 		    	  long totalCategoryCount = this.itemRepository.countItemByCategory();
@@ -153,7 +154,7 @@ public class ItemService {
 		    	  return categoryResponseDTO;
 		      }
 		      catch(Exception ex) {
-		    	  throw ex;
+		    	  throw new CustomException("null");
 		      }
 	   }
 }

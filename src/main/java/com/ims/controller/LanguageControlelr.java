@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.exceptions.CustomException;
 import com.ims.dto.response.LanguageResponseDTO;
 import com.ims.service.LanguageService;
 
@@ -19,7 +20,7 @@ public class LanguageControlelr {
 	   private LanguageService languageService;
 	   
 	   @GetMapping(value = "allLanguages")
-	   public ResponseEntity<?> retrieveAllLanguages(){
+	   public ResponseEntity<?> retrieveAllLanguages() throws CustomException{
 		      try {
 		    	  Map<String, List<LanguageResponseDTO>> languagesResponseMap = new HashMap<>();
 		    	  List<LanguageResponseDTO> languages = this.languageService.retrieveAllLanguages();
@@ -32,7 +33,7 @@ public class LanguageControlelr {
 		    	  }
 		      }
 		      catch(Exception ex) {
-		    	  throw ex;
+		    	  throw new CustomException("null");
 		      }
 	   }
 }

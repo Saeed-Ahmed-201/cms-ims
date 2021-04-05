@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.exceptions.CustomException;
 import com.ims.dto.request.ItemUpdateRequest;
 import com.ims.dto.request.ItemsDeleteRequest;
 import com.ims.dto.response.CategoryStaticResponseDTO;
@@ -29,8 +30,7 @@ public class ItemController {
 	   private ItemService itemService;
 	   
 	   @GetMapping(value = "/allItems")
-	   public ResponseEntity<?> retrieveAllItems(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "40") int size){
-		      try {
+	   public ResponseEntity<?> retrieveAllItems(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "40") int size) throws CustomException{
 		    	    Map<String, List<ItemResponseDTO>> itemResponseMap = new HashMap<>();
 		    	    Pageable pagination =  PageRequest.of(page, size);
 		    	    List<ItemResponseDTO> items = this.itemService.retrieveAllItems(pagination);
@@ -39,16 +39,11 @@ public class ItemController {
 		    	    	return ResponseEntity.ok(itemResponseMap);
 		    	    }
 		    	    return ResponseEntity.ok(null);
-		      }
-		      catch(Exception ex) {
-		    	  throw ex;
-		      }
-	   }
+	  }
 	   
 	   @GetMapping(value = "/items/{languageId}/{categoryId}")
-	   public ResponseEntity<?> retrieveItemsByCategoryAndLanguage(@PathVariable(name = "languageId") long languageId, @PathVariable(name = "categoryId") long categoryId,@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "40") int size){
-		      try {
-		    	    Map<String, List<ItemResponseDTO>> itemResponseMap = new HashMap<>();
+	   public ResponseEntity<?> retrieveItemsByCategoryAndLanguage(@PathVariable(name = "languageId") long languageId, @PathVariable(name = "categoryId") long categoryId,@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "40") int size) throws CustomException{
+    	            Map<String, List<ItemResponseDTO>> itemResponseMap = new HashMap<>();
 		    	    Pageable pagination =  PageRequest.of(page, size);
 		    	    List<ItemResponseDTO> items = this.itemService.retrieveItemsByCategoryAndLanguage(languageId, categoryId, pagination);
 		    	    if(!items.isEmpty()) {
@@ -56,68 +51,45 @@ public class ItemController {
 		    	    	return ResponseEntity.ok(itemResponseMap);
 		    	    }
 		    	    return ResponseEntity.ok(null);
-		      }
-		      catch(Exception ex) {
-		    	  throw ex;
-		      }
+		     
 	   }
 	   
 	   @PutMapping(value = "/delete/items")
-	   public ResponseEntity<?> deleteMultipleItems(@RequestBody ItemsDeleteRequest ids){
-		      try {
+	   public ResponseEntity<?> deleteMultipleItems(@RequestBody ItemsDeleteRequest ids) throws CustomException{
 		    	  boolean feedback = this.itemService.deleteMultipleItems(ids);
 		    	  if(feedback) {
 		    		  return ResponseEntity.ok("ok");
 		    	  }
 		    	      return ResponseEntity.ok(null);
-		      }
-		      catch(Exception ex) {
-		    	  throw ex;
-		      }
 	   }
 	   
 	   @PutMapping(value = "/update/item")
-	   public ResponseEntity<?> updateItemLanguageCategory(@RequestBody ItemUpdateRequest updateItem){
-		      try {
-		    	  boolean feedback = this.itemService.updateItemLanguageCategory(updateItem);
+	   public ResponseEntity<?> updateItemLanguageCategory(@RequestBody ItemUpdateRequest updateItem) throws CustomException{
+		        boolean feedback = this.itemService.updateItemLanguageCategory(updateItem);
 		    	  if(feedback) {
 		    		  return ResponseEntity.ok("ok");
 		    	  }
 		    	  return ResponseEntity.ok(null);
-		      }
-		      catch(Exception ex) {
-		    	  throw ex;  
-		      }
 	   }
 	   
 	   @GetMapping(value = "/languagesStatistics")
-	   public ResponseEntity<?> itemStaticsByLanguage() {
-		      try {
-		    	  Map<String, List<LanguageStaticResponse>> languageStaticsMap = new HashMap<>();
+	   public ResponseEntity<?> itemStaticsByLanguage() throws CustomException {
+		     	  Map<String, List<LanguageStaticResponse>> languageStaticsMap = new HashMap<>();
 		    	  List<LanguageStaticResponse> languageStatics =  this.itemService.itemStaticsByLanguage();
 		    	  if(!languageStatics.isEmpty()) {
 		    		  languageStaticsMap.put("languages", languageStatics);
 		    		  return ResponseEntity.ok(languageStaticsMap);
 		    	  }
-		    	  return ResponseEntity.ok(null);
-		      }
-		      catch(Exception ex) {
-		    	  throw ex;
-		      }
+		    	  return ResponseEntity.ok(null); 
 	   }
 	   
 	   @GetMapping(value = "/categoriesStatistics")
-	   public ResponseEntity<?> itemStaticsByCategory(){
-		      try {
+	   public ResponseEntity<?> itemStaticsByCategory() throws CustomException{
 		    	  CategoryStaticResponseDTO categoryStaticResponseDTO = this.itemService.itemStaticsByCategory();
 		    	  if(!categoryStaticResponseDTO.equals(null)) {		    		  
 		    		  return ResponseEntity.ok(categoryStaticResponseDTO);
 		    	  }
 		    	      return ResponseEntity.ok(null);
-		      }
-		      catch(Exception ex) {
-		    	  throw ex;
-		      }
 	   }
 	   
 
